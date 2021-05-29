@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+    <script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+</head>
+
+<div class="content" id="printini">
+    <h1 style="text-align: center">Inventaris Menu Baru</h1>
+    <h1 style="text-align: center">Hi, {{ halo }}!</h1>
+    <a href="/lihatBarang">DAFTAR BARANG</a>
+    <br>
+    <br>
+    <a href="/lihatRuang">DATA RUANG</a>
+    <br>
+    <br>
+    <a href="/lihatGedung">DATA GEDUNG</a>
+    <br>
+    <br>
+    <a href="/lihatPegawai">DATA PEGAWAI</a>
+    <br>
+    <br>
+    <a href="/lihatPeminjaman">DATA PEMINJAMAN</a>
+    <br>
+    <br>
+    <a href="/inputPinjam">INPUT PEMINJAMAN</a>
+    <br>
+    <br>
+    <a href="/inputMenu">INPUT ADMIN</a>
+    <br>
+    <br>
+    <a href=/logoutbye> logout </a>
+</div>
+<div class="donlot" style="text-align: center">
+    <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+{% endblock %}

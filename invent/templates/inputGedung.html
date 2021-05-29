@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+</div>
+<div class="form">
+    <form action="/inputGedung" method="POST">
+        <a>Nama Gedung Baru :</a>
+        <br>
+        <input type="text" name="nama">
+        <input type="submit" value="add barang">
+    </form>
+    <a href="/inputMenu">balik</a>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+<script src="{{ url_for('static', filename="js/basee.js") }}""></script>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+</div>
+<div class="form">
+    <form action="/inputManusia" method="POST">
+        <a>ID :</a>
+        <br>
+        <input type="number" name="id">
+        <br>
+        <a>Nama pegawai :</a>
+        <br>
+        <input type="text" name="nama">
+        <br>
+        <a>Sandi Pegawai :</a>
+        <br>
+        <input type="text" name="sandi">
+        <br>
+        <a>Alamat Pegawai :</a>
+        <br>
+        <input type="text" name="alamat">
+        <br>
+        <a>No.Telp Pegawai :</a>
+        <br>
+        <input type="text" name="notelp">
+        <input type="submit" value="add pegawai baru">
+    </form>
+    <a href="/inputMenu">balik</a>
+</div>
+{% endblock %}

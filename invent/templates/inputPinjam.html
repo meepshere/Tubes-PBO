@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+<script src="{{ url_for('static', filename="js/basee.js") }}""></script>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+</div>
+<div class="form">
+    <form action="/inputPinjam" method="POST" enctype="multipart/form-data">
+        <a>Perihal Pinjam bang :</a>
+        <br>
+        <input type="text" name="nama" required>
+        <br>
+        <a>Barang bang :</a>
+        <br>
+        <select name="barangnya" id="barangnya" required>
+            {% for t in dafBarang %}
+            <option value={{t.id}}>{{t.namaBarang}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <a>Gedung bang :</a>
+        <br>
+        <select name="gedungnya" id="gedungnya" required>
+            {% for t in dafGedung %}
+            <option value={{t.id}}>{{t.namaGedung}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <a>Ruang bang :</a>
+        <br>
+        <select name="ruangnya" id="ruangnya" required>
+            {% for t in dafKelas %}
+            <option value={{t.id}}>{{t.namaRuang}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <a>BAST Disposisi :</a>
+        <br>
+        <input type="file" name="inputFile" required>
+        <input type="submit" value="add barang">
+    </form>
+    <a href="/menu">balik</a>
+</div>
+<script>
+    country_select = document.getElementById('gedungnya');
+    state_select = document.getElementById('ruangnya');
+     
+    country_select.onchange = function(){
+     country = country_select.value;
+     fetch('/ruang/' + country).then(function(response){
+      response.json().then(function(data) {
+       optionHTML = '';
+       for (state of data.ruangarray) {
+        optionHTML += '<option value="' + state.id +'">' + state.name + '</option>'
+       }
+       state_select.innerHTML = optionHTML;
+      });
+     });
+    }
+</script>
+{% endblock %}

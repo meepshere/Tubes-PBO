@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+</div>
+<div class="form">
+    <form action="/inputRuang" method="POST">
+        <a>Nama Ruang bang :</a>
+        <br>
+        <input type="text" name="nama">
+        <br>
+        <a>Gedung bang :</a>
+        <br>
+        <select name="gedungnya" id="gedungnya">
+            {% for t in dafGedung %}
+            <option value={{t.id}}>{{t.namaGedung}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="add barang">
+    </form>
+    <a href="/inputMenu">balik</a>
+</div>
+{% endblock %}

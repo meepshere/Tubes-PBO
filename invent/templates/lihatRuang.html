@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+<script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+<script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+{% endblock %}
+
+{% block body %}
+<div class="content" id="printini">
+    <h1 style="text-align: center">Inventaris</h1>
+    <h1 style="text-align: center">{{ judul }}</h1>
+    {% if ruangnya|length < 1 %}
+    <h4 style="text-align: center">gaada barang bang..</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>ID Ruang</th>
+            <th>Nama Ruang</th>
+            <th>Gedung</th>
+            <th>Banyak Barang</th>
+        </tr>
+        {% for i in range(0, ruangnya | length) %}
+            <tr>
+                <td>{{ ruangnya[i].id }}</td>
+                <td>{{ ruangnya[i].namaRuang }}</td>
+                <td>{{ ruangnya[i].beradaPadaGedung.namaGedung }}</td>
+                <td>{{ banyakBarang[i] }}</td>
+                <td>
+                    <a href="">lihat</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    {% endif %}
+    <a href="/menu">balik</a>
+</div>
+
+<div class="donlot" style="text-align: center">
+    <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+<div class="form">
+    <form action="/lihatRuang" method="POST" enctype="multipart/form-data">
+        <a>Gedung bang :</a>
+        <br>
+        <select name="gedungnya" id="gedungnya" required>
+            {% for t in dafGedung %}
+            <option value={{t.id}}>{{t.namaGedung}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="lihat ruang">
+    </form>
+    <a href="/lihatRuang">reset</a>
+</div>
+
+<script>
+    country_select = document.getElementById('gedungnya');
+    state_select = document.getElementById('ruangnya');
+     
+    country_select.onchange = function(){
+     country = country_select.value;
+     fetch('/ruang/' + country).then(function(response){
+      response.json().then(function(data) {
+       optionHTML = '';
+       for (state of data.ruangarray) {
+        optionHTML += '<option value="' + state.id +'">' + state.name + '</option>'
+       }
+       state_select.innerHTML = optionHTML;
+      });
+     });
+    }
+</script>
+{% endblock %}

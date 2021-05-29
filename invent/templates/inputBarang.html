@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+</div>
+<div class="form">
+    <form action="/inputBarang" method="POST" enctype="multipart/form-data">
+        <a>Nama Barang :</a>
+        <br>
+        <input type="text" name="nama">
+        <br>
+        <a>Stok :</a>
+        <br>
+        <input type="text" name="stokc">
+        <br>
+        <a>BAST Perolehan :</a>
+        <br>
+        <input type="file" name="inputFile">
+        <input type="submit" value="add barang">
+    </form>
+    <a href="/inputMenu">balik</a>
+</div>
+{% endblock %}
