@@ -53,7 +53,8 @@
     <form action="/lihatBarang" method="POST" enctype="multipart/form-data">
         <a>Gedung bang :</a>
         <br>
-        <select name="gedungnya" id="gedungnya" required>
+        <select name="gedungnya" id="gedungnya">
+            <option value=0></option>
             {% for t in dafGedung %}
             <option value={{t.id}}>{{t.namaGedung}}</option>
             {% endfor %}
@@ -61,14 +62,14 @@
         <br>
         <a>Ruang bang :</a>
         <br>
-        <select name="ruangnya" id="ruangnya" required>
+        <select name="ruangnya" id="ruangnya">
+            <option value=0></option>
             {% for t in dafKelas %}
             <option value={{t.id}}>{{t.namaRuang}}</option>
             {% endfor %}
         </select>
         <input type="submit" value="lihat barang">
     </form>
-    <a href="/lihatBarang">reset</a>
 </div>
 <div class="donlot" style="text-align: center">
     <button class="btn btn-primary" id="download"> download pdf</button>
@@ -83,6 +84,7 @@
      fetch('/ruang/' + country).then(function(response){
       response.json().then(function(data) {
        optionHTML = '';
+       optionHTML += '<option value=0> </option>'
        for (state of data.ruangarray) {
         optionHTML += '<option value="' + state.id +'">' + state.name + '</option>'
        }

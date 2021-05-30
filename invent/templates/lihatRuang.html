@@ -46,13 +46,13 @@
         <a>Gedung bang :</a>
         <br>
         <select name="gedungnya" id="gedungnya" required>
+            <option value=0></option>
             {% for t in dafGedung %}
             <option value={{t.id}}>{{t.namaGedung}}</option>
             {% endfor %}
         </select>
         <input type="submit" value="lihat ruang">
     </form>
-    <a href="/lihatRuang">reset</a>
 </div>
 
 <script>

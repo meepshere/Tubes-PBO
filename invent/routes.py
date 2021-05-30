@@ -74,26 +74,29 @@ def lihatRuang():
         if 'user' in session or 'admin' in session:
             if request.method == 'POST':
                 building = request.form['gedungnya']
-                dafGedung = Gedung.query.all()
-                allRuang = Ruang.query.filter_by(ged_id=int(building))
-                gedungObj = Gedung.query.get_or_404(int(building))
-                gedungName = gedungObj.namaGedung
-                semuaRuang = []
-                banyakBarang = []
-                brg = Barang.query.all()
-                dataPinjam = []
-                for task in brg:
-                    # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
-                    pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
-                    dataPinjam.append(pinjam)
-                for i in allRuang:
-                    hitung = 0
-                    for j in i.barangsR:
-                        if j in dataPinjam:
-                            hitung += 1
-                    banyakBarang.append(hitung) 
-                    semuaRuang.append(i)
-                return render_template('lihatRuang.html', ruangnya=semuaRuang, banyakBarang=banyakBarang, dafGedung=dafGedung, judul=f'Gedung {gedungName}', jabatan=jabatan)
+                if int(building)==0:
+                    return redirect('/lihatRuang')
+                else:
+                    dafGedung = Gedung.query.all()
+                    allRuang = Ruang.query.filter_by(ged_id=int(building))
+                    gedungObj = Gedung.query.get_or_404(int(building))
+                    gedungName = gedungObj.namaGedung
+                    semuaRuang = []
+                    banyakBarang = []
+                    brg = Barang.query.all()
+                    dataPinjam = []
+                    for task in brg:
+                        # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                        pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                        dataPinjam.append(pinjam)
+                    for i in allRuang:
+                        hitung = 0
+                        for j in i.barangsR:
+                            if j in dataPinjam:
+                                hitung += 1
+                        banyakBarang.append(hitung) 
+                        semuaRuang.append(i)
+                    return render_template('lihatRuang.html', ruangnya=semuaRuang, banyakBarang=banyakBarang, dafGedung=dafGedung, judul=f'Gedung {gedungName}', jabatan=jabatan)
 
             else:
                 semuaRuang = Ruang.query.all()
@@ -162,38 +165,67 @@ def lihatBarang():
             if request.method == 'POST':
                 building = request.form['gedungnya']
                 room = request.form['ruangnya']
-                roomName = Ruang.query.filter_by(id=int(room)).first()
-                roomName = roomName.namaRuang
+                if int(room) != 0:
+                    roomName = Ruang.query.filter_by(id=int(room)).first()
+                    roomName = roomName.namaRuang
+                    
+                    brg = Barang.query.all()
+                    dataPinjam = []
+                    dataPinjam2 = []
+                    stats = []
+                    dafGedung = Gedung.query.all()
+                    dafKelas = Ruang.query.all()
+                    for task in brg:
+                        # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                        pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                        if pinjam:
+                            dataPinjam.append(pinjam)
+                    
+                    for i in dataPinjam:
+                        if i.kel == int(room):
+                            dataPinjam2.append(i)
+                            stats.append(1)
                 
-                brg = Barang.query.all()
-                dataPinjam = []
-                dataPinjam2 = []
-                stats = []
-                dafGedung = Gedung.query.all()
-                dafKelas = Ruang.query.filter_by(ged_id=1)
-                for task in brg:
-                    # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
-                    pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
-                    if pinjam:
-                        dataPinjam.append(pinjam)
-                
-                for i in dataPinjam:
-                    if i.kel == int(room):
-                        dataPinjam2.append(i)
-                        stats.append(1)
-            
-                # for i in dataPinjam:
-                #     pinjam = Peminjaman.query.filter_by(kel=room, id=i.id).first()            
-                #     dataPinjam2.append(pinjam)
+                    # for i in dataPinjam:
+                    #     pinjam = Peminjaman.query.filter_by(kel=room, id=i.id).first()            
+                    #     dataPinjam2.append(pinjam)
 
-                return render_template('lihatBarang.html', brg=brg, pinjam=dataPinjam2, stats=stats, dafGedung=dafGedung, dafKelas=dafKelas, judul=f"Ruang {roomName}")
+                    return render_template('lihatBarang.html', brg=brg, pinjam=dataPinjam2, stats=stats, dafGedung=dafGedung, dafKelas=dafKelas, judul=f"Ruang {roomName}")
+                elif int(building) !=0:
+                    roomName = Gedung.query.filter_by(id=int(building)).first()
+                    roomName = roomName.namaGedung
+                    
+                    brg = Barang.query.all()
+                    dataPinjam = []
+                    dataPinjam2 = []
+                    stats = []
+                    dafGedung = Gedung.query.all()
+                    dafKelas = Ruang.query.all()
+                    for task in brg:
+                        # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                        pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                        if pinjam:
+                            dataPinjam.append(pinjam)
+                    
+                    for i in dataPinjam:
+                        if i.ged == int(building):
+                            dataPinjam2.append(i)
+                            stats.append(1)
+                
+                    # for i in dataPinjam:
+                    #     pinjam = Peminjaman.query.filter_by(kel=room, id=i.id).first()            
+                    #     dataPinjam2.append(pinjam)
+
+                    return render_template('lihatBarang.html', brg=brg, pinjam=dataPinjam2, stats=stats, dafGedung=dafGedung, dafKelas=dafKelas, judul=f"Gedung {roomName}")
+                else:
+                    return redirect('/lihatBarang')
 
             else:
                 brg = Barang.query.all()
                 dataPinjam = []
                 stats = []
                 dafGedung = Gedung.query.all()
-                dafKelas = Ruang.query.filter_by(ged_id=1)
+                dafKelas = Ruang.query.all()
                 for task in brg:
                     # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
                     pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
@@ -222,10 +254,12 @@ def lihatPegawai():
         
 @app.route('/lihatPeminjaman', methods=['POST', 'GET'])
 def lihatPeminjaman():
-    try:
+    #try:
         if 'user' in session or 'admin' in session:
             if request.method == 'POST':
                 barangnya = request.form['barangnya']
+                ruangnya = request.form['ruangnya']
+                gedungnya = request.form['gedungnya']
                 dafGedung = Gedung.query.all()
                 dafKelas = []
                 if int(barangnya) != 0:
@@ -241,7 +275,36 @@ def lihatPeminjaman():
                     dafPinjam2 = []
                     for i in dafPinjam:
                         dafPinjam2.append(i)
-                    return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2, judul=f"Peminjaman {keyword}", dafGedung=dafGedung, dafKelas=dafKelas)
+                    return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2, judul=f"Riwayat Peminjaman Barang {keyword}", dafGedung=dafGedung, dafKelas=dafKelas)
+                elif int(ruangnya) != 0:
+                    keyword = Ruang.query.get_or_404(int(ruangnya))
+                    keyword = keyword.namaRuang
+                    dafBarang = Barang.query.all()
+                    dafBarang2 = []
+                    for i in dafBarang:
+                        temp = Peminjaman.query.filter_by(benda=i.id).first()
+                        if temp:
+                            dafBarang2.append(i)
+                    dafPinjam = Peminjaman.query.filter_by(kel=int(ruangnya))
+                    dafPinjam2 = []
+                    for i in dafPinjam:
+                        dafPinjam2.append(i)
+                    return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2, judul=f"Riwayat Peminjaman Ruang {keyword}", dafGedung=dafGedung, dafKelas=dafKelas)
+                elif int(gedungnya) != 0:
+                    keyword = Gedung.query.get_or_404(int(gedungnya))
+                    keyword = keyword.namaGedung
+                    dafBarang = Barang.query.all()
+                    dafBarang2 = []
+                    for i in dafBarang:
+                        temp = Peminjaman.query.filter_by(benda=i.id).first()
+                        if temp:
+                            dafBarang2.append(i)
+                    dafPinjam = Peminjaman.query.filter_by(ged=int(gedungnya))
+                    dafPinjam2 = []
+                    for i in dafPinjam:
+                        dafPinjam2.append(i)
+                    return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2, judul=f"Riwayat Peminjaman Gedung {keyword}", dafGedung=dafGedung, dafKelas=dafKelas)
+
                 else:
                     return redirect('/lihatPeminjaman')
             else:
@@ -257,12 +320,12 @@ def lihatPeminjaman():
                 return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam, dafBarang=dafBarang2, judul="Seluruh Peminjaman", dafGedung=dafGedung, dafKelas=dafKelas)
         else:
             return redirect('/')
-    except:
-        return redirect('/')
+    #except:
+        #return redirect('/')
 
 @app.route('/inputPinjam', methods=['POST', 'GET'])
 def inputPinjam():
-    #try:
+    try:
         if 'user' in session or 'admin' in session:
             dafGedung = Gedung.query.all()
             dafBarang = Barang.query.all()
@@ -303,8 +366,8 @@ def inputPinjam():
                 return render_template('inputPinjam.html', dafGedung=dafGedung, dafKelas=dafKelas, dafBarang=dafBarang)
         else:
             return redirect('/')
-    #except:
-        #return redirect('/')
+    except:
+        return redirect('/')
 
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
