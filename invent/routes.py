@@ -226,19 +226,27 @@ def lihatPeminjaman():
         if 'user' in session or 'admin' in session:
             if request.method == 'POST':
                 barangnya = request.form['barangnya']
-                dafBarang = Barang.query.all()
-                dafBarang2 = []
-                for i in dafBarang:
-                    temp = Peminjaman.query.filter_by(benda=i.id).first()
-                    if temp:
-                        dafBarang2.append(i)
-                dafPinjam = Peminjaman.query.filter_by(benda=int(barangnya))
-                dafPinjam2 = []
-                for i in dafPinjam:
-                    dafPinjam2.append(i)
-                return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2)
-
+                dafGedung = Gedung.query.all()
+                dafKelas = []
+                if int(barangnya) != 0:
+                    keyword = Barang.query.get_or_404(int(barangnya))
+                    keyword = keyword.namaBarang
+                    dafBarang = Barang.query.all()
+                    dafBarang2 = []
+                    for i in dafBarang:
+                        temp = Peminjaman.query.filter_by(benda=i.id).first()
+                        if temp:
+                            dafBarang2.append(i)
+                    dafPinjam = Peminjaman.query.filter_by(benda=int(barangnya))
+                    dafPinjam2 = []
+                    for i in dafPinjam:
+                        dafPinjam2.append(i)
+                    return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2, judul=f"Peminjaman {keyword}", dafGedung=dafGedung, dafKelas=dafKelas)
+                else:
+                    return redirect('/lihatPeminjaman')
             else:
+                dafGedung = Gedung.query.all()
+                dafKelas = []
                 dafPinjam = Peminjaman.query.all()
                 dafBarang = Barang.query.all()
                 dafBarang2 = []
@@ -246,7 +254,7 @@ def lihatPeminjaman():
                     temp = Peminjaman.query.filter_by(benda=i.id).first()
                     if temp:
                         dafBarang2.append(i)
-                return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam, dafBarang=dafBarang2)
+                return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam, dafBarang=dafBarang2, judul="Seluruh Peminjaman", dafGedung=dafGedung, dafKelas=dafKelas)
         else:
             return redirect('/')
     except:
@@ -254,7 +262,7 @@ def lihatPeminjaman():
 
 @app.route('/inputPinjam', methods=['POST', 'GET'])
 def inputPinjam():
-    try:
+    #try:
         if 'user' in session or 'admin' in session:
             dafGedung = Gedung.query.all()
             dafBarang = Barang.query.all()
@@ -267,11 +275,13 @@ def inputPinjam():
                     gedungnya = request.form['gedungnya']
                     ruangnya = request.form['ruangnya']
                     file = request.files['inputFile']
+                    kondisi = request.form['kondisi']
+                    tgl = request.form['tgl']
 
                     # global mimtipe
                     mimtipe = file.mimetype
                     #try:
-                    newFile = Peminjaman(kodePeminjaman=nama, benda=barangnya, peminjam=pengguna.getID(), ged=gedungnya, kel=ruangnya, bast=file.filename, bastData=file.read(), bastMimtype=mimtipe, tgl="1", tgl2="2")
+                    newFile = Peminjaman(kodePeminjaman=nama, benda=barangnya, peminjam=pengguna.getID(), ged=gedungnya, kel=ruangnya, bast=file.filename, bastData=file.read(), bastMimtype=mimtipe, tgl=tgl, kondisi=kondisi)
                     db.session.add(newFile)
                     db.session.commit()
                     return "noice"
@@ -293,8 +303,8 @@ def inputPinjam():
                 return render_template('inputPinjam.html', dafGedung=dafGedung, dafKelas=dafKelas, dafBarang=dafBarang)
         else:
             return redirect('/')
-    except:
-        return redirect('/')
+    #except:
+        #return redirect('/')
 
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
@@ -531,6 +541,7 @@ def detailPeminjaman(id):
 
     except:
         return redirect('/')
+
 @app.route('/detailPegawai/<int:id>')
 def detailPegawai(id):
     try:
@@ -545,5 +556,80 @@ def detailPegawai(id):
                 banyakPinjam += 1
 
             return render_template('detailPegawai.html', id=id, pegawainya=pegawainya, banyakPinjam=banyakPinjam, listPinjam=listPinjam)
+    except:
+        return redirect('/')
+
+@app.route('/barang/<get_brg>')
+def findBarang(get_brg):
+    try:
+        if 'user' in session or 'admin' in session:
+            roomName = Ruang.query.filter_by(id=int(get_brg)).first()
+            roomName = roomName.namaRuang
+            
+            brg = Barang.query.all()
+            dataPinjam = []
+            dataPinjam2 = []
+            stats = []
+            dafGedung = Gedung.query.all()
+            dafKelas = Ruang.query.filter_by(ged_id=1)
+            for task in brg:
+                # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                if pinjam:
+                    dataPinjam.append(pinjam)
+            
+            for i in dataPinjam:
+                if i.kel == int(get_brg):
+                    dataPinjam2.append(i)
+                    stats.append(1)
+            
+            brgArray = []
+            for i in dataPinjam2:
+                rObj = {}
+                rObj['id'] = i.barangDipinjam.id
+                rObj['name'] = i.barangDipinjam.namaBarang
+                brgArray.append(rObj)
+            return jsonify({'brgarray' : brgArray})
+            
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+        
+@app.route('/barangG/<get_brg>')
+def findBarangG(get_brg):
+    try:
+        if 'user' in session or 'admin' in session:
+            roomName = Ruang.query.filter_by(id=int(get_brg)).first()
+            roomName = roomName.namaRuang
+            
+            brg = Barang.query.all()
+            dataPinjam = []
+            dataPinjam2 = []
+            stats = []
+            dafGedung = Gedung.query.all()
+            dafKelas = Ruang.query.filter_by(ged_id=1)
+            for task in brg:
+                # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                if pinjam:
+                    dataPinjam.append(pinjam)
+            
+            for i in dataPinjam:
+                if i.ged == int(get_brg):
+                    dataPinjam2.append(i)
+                    stats.append(1)
+            
+            brgArray = []
+            for i in dataPinjam2:
+                rObj = {}
+                rObj['id'] = i.barangDipinjam.id
+                rObj['name'] = i.barangDipinjam.namaBarang
+                brgArray.append(rObj)
+            return jsonify({'brgarray' : brgArray})
+            
+        else:
+            return redirect('/')
     except:
         return redirect('/')

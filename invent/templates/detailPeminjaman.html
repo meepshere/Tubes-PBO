@@ -47,7 +47,7 @@
                 Nama Barang
             </td>
             <td>
-                {{pinjamnya.barangDipinjam.namaBarang}}
+                <a href="/detailBarang/{{pinjamnya.barangDipinjam.id}}">{{pinjamnya.barangDipinjam.namaBarang}}</a>
             </td>
         </tr>
         <tr>
@@ -63,7 +63,7 @@
                 ID Gedung Peminjaman
             </td>
             <td>
-                <a href="">{{pinjamnya.tempatGedung.id}}</a>
+                {{pinjamnya.tempatGedung.id}}
             </td>
         </tr>
         <tr>
@@ -104,7 +104,7 @@
                 Status Barang
             </td>
             <td>
-                {{pinjamnya.tgl}}
+                {{pinjamnya.kondisi}}
             </td>
         </tr>
         <tr>  

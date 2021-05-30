@@ -13,6 +13,14 @@
         <br>
         <input type="text" name="nama">
         <input type="submit" value="add barang">
+        <br>
+        <a>MG Gedung bang :</a>
+        <br>
+        <select name="pegawainya" id="pegawainya">
+            {% for t in dafPegawai %}
+            <option value={{t.id}}>{{t.nama}}</option>
+            {% endfor %}
+        </select>
     </form>
     <a href="/inputMenu">balik</a>
 </div>

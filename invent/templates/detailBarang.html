@@ -51,6 +51,14 @@
             </td>
         </tr>
         {% if stat == 1 %}
+            <tr>  
+                <td>
+                    Kondisi Barang
+                </td>
+                <td>
+                    {{pinjam.kondisi}}
+                </td>
+            </tr>
             <tr>
                 <td>
                     ID Ruang Barang
@@ -93,6 +101,14 @@
                 </td>
             </tr>
             <tr>
+                <tr>  
+                    <td>
+                        Tanggal Peminjaman
+                    </td>
+                    <td>
+                        {{pinjam.tgl}}
+                    </td>
+                </tr>
                 <td>
                     Peminjam Barang
                 </td>
@@ -115,7 +131,7 @@
                 </td>
                 <td>
                 {% for i in range(0, listPinjam | length)%}
-                    {{listPinjam[i].kodePeminjaman}}
+                    <a href="/detailPeminjaman/{{listPinjam[i].id}}">{{listPinjam[i].kodePeminjaman}}</a>
                     <br>    
                 {% endfor %}
                 </td>

@@ -47,7 +47,7 @@
                 MG Gedung
             </td>
             <td>
-                {{gedungnya.namaGedung}}
+                {{gedungnya.mg_gedung}}
             </td>
         </tr>
         <tr>
@@ -64,8 +64,8 @@
                 Daftar Ruang
             </td>
             <td>
-            {% for i in range(0, dafPinjam | length)%}
-                {{listRuang[i].namaRuang}}
+            {% for i in range(0, listRuang | length)%}
+                <a href="/detailRuang/{{listRuang[i].id}}">{{listRuang[i].namaRuang}}</a>
                 <br>
             {% endfor %}
             </td>

@@ -47,7 +47,7 @@
                 PJ Ruang
             </td>
             <td>
-                {{ruangnya.namaRuang}}
+                {{ruangnya.PJ_dariRuang.nama}}
             </td>
         </tr>
         <tr>
@@ -102,7 +102,7 @@
             </td>
             <td>
             {% for i in range(0, listPinjam | length)%}
-                {{listPinjam[i].kodePeminjaman}}
+                <a href="/detailPeminjaman/{{listPinjam[i].id}}">{{listPinjam[i].kodePeminjaman}}</a>
                 <br>    
             {% endfor %}
             </td>

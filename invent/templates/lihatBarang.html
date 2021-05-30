@@ -19,6 +19,7 @@
             <th>Nama Barang</th>
             <th>Gedung</th>
             <th>Ruang</th>      
+            <th>Kondisi</th>      
         </tr>
         {% for i in range(0, pinjam | length) %}
             <tr>
@@ -27,13 +28,14 @@
                     <td>{{ pinjam[i].barangDipinjam.namaBarang }}</td>
                     <td>{{ pinjam[i].tempatGedung.namaGedung }}</td>
                     <td>{{ pinjam[i].tempatKelas.namaRuang }}</td>
+                    <td>{{ pinjam[i].kondisi }}</td>
                     <td>
                         <a href="/detailBarang/{{pinjam[i].barangDipinjam.id}}">detail</a>
                     </td>
                 {% else %}
                     <td> {{ brg[i].id }} </td>
                     <td> {{ brg[i].namaBarang }} </td>
-                    <td> None </td> <td> None </td>
+                    <td> None </td> <td> None </td> <td> None </td>
                     <td>
                         <a href="/detailBarang/{{brg[i].id}}">detail</a>
                     </td>

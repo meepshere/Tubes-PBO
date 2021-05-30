@@ -20,6 +20,14 @@
             <option value={{t.id}}>{{t.namaGedung}}</option>
             {% endfor %}
         </select>
+        <br>
+        <a>PJ Ruang bang :</a>
+        <br>
+        <select name="pegawainya" id="pegawainya">
+            {% for t in dafPegawai %}
+            <option value={{t.id}}>{{t.nama}}</option>
+            {% endfor %}
+        </select>
         <input type="submit" value="add barang">
     </form>
     <a href="/inputMenu">balik</a>

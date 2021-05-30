@@ -56,6 +56,7 @@ class Peminjaman(db.Model):
     bast = db.Column(db.String(300))
     bastData = db.Column(db.LargeBinary)
     bastMimtype = db.Column(db.Text)
+    kondisi = db.Column(db.String(200))
     
 class FileContents(db.Model):
     id = db.Column(db.Integer,primary_key=True)

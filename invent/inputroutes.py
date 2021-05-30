@@ -62,16 +62,18 @@ def inputGedung():
         if 'user' in session or 'admin' in session:
                 if request.method == 'POST':
                     nama = request.form['nama']
+                    pegawainya = request.form['pegawainya']
                     
                     try:
-                        newFile = Gedung(namaGedung=nama)
+                        newFile = Gedung(namaGedung=nama, mg_gedung=int(pegawainya))
                         db.session.add(newFile)
                         db.session.commit()
                         return "noice"
                     except:
                         return "gagal"
                 else:
-                    return render_template('inputGedung.html')
+                    dafPegawai = Manusia.query.all()
+                    return render_template('inputGedung.html', dafPegawai=dafPegawai)
         else:
             return redirect('/')
     except:
@@ -81,22 +83,24 @@ def inputGedung():
 def inputRuang():
     try:
         if 'user' in session or 'admin' in session:
-            dafGedung = Gedung.query.all()
-            dafKelas = Ruang.query.all()
             if request.method == 'POST':
-                nama = request.form['nama']
-                gedungnya = request.form['gedungnya']
+                if request.method == 'POST':
+                    nama = request.form['nama']
+                    gedungnya = request.form['gedungnya']
+                    pegawainya = request.form['pegawainya']
 
-                try:
-                    tempat = Gedung.query.filter_by(id=gedungnya).first()
-                    kelas_baru = Ruang(namaRuang=nama, ged_id=tempat.id)
-                    db.session.add(kelas_baru)
-                    db.session.commit()
-                    return "noice"
-                except:
-                    return 'gatau gagal'
+                    try:
+                        tempat = Gedung.query.filter_by(id=gedungnya).first()
+                        kelas_baru = Ruang(namaRuang=nama, ged_id=tempat.id, pj_ruang=int(pegawainya))
+                        db.session.add(kelas_baru)
+                        db.session.commit()
+                        return "noice"
+                    except:
+                        return 'gatau gagal'
             else:
-                return render_template('inputRuang.html', dafGedung=dafGedung)
+                dafPegawai = Manusia.query.all()
+                dafGedung = Gedung.query.all()
+                return render_template('inputRuang.html', dafGedung=dafGedung, dafPegawai=dafPegawai)
         else:
             return redirect('/')
     except:
