@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+    <script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+</head>
+
+<div class="content" id="printini">
+    <h1 style="text-align: center">Inventaris</h1>
+    <h1 style="text-align: center">Detail Pegawai {{pegawainya.kodePegawai}} </h1>
+    <table>
+        <tr>
+            <th>
+                Detail
+            </th>
+            <th>
+                Detail
+            </th>
+        </tr>
+        <tr>  
+            <td>
+                Nama Pegawai
+            </td>
+            <td>
+                {{pegawainya.nama}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ID Pegawai
+            </td>
+            <td>
+                {{pegawainya.id}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Alamat Pegawai
+            </td>
+            <td>
+                {{pegawainya.alamat}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                No Telp
+            </td>
+            <td>
+                {{pegawainya.no_telp}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Role
+            </td>
+            <td>
+                {{pegawainya.role}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Banyak Peminjaman
+            </td>
+            <td>
+                {{banyakPinjam}}
+            </td>
+        </tr>
+        {% if banyakPinjam > 0 %}
+        <tr>
+            <td>
+                Daftar Peminjaman
+            </td>
+            <td>
+            {% for i in listPinjam %}
+                    {{i.kodePeminjaman}}
+                    <br>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+    <a href="/lihatPegawai">balik</a>
+</div>
+<div class="donlot" style="text-align: center">
+    <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+{% endblock %}

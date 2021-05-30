@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+    <script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+</head>
+
+<div class="content" id="printini">
+    <h1 style="text-align: center">Inventaris</h1>
+    <h1 style="text-align: center">Detail Barang {{barangnya.namaBarang}} </h1>
+    <table>
+        <tr>
+            <th>
+                Detail
+            </th>
+            <th>
+                Detail
+            </th>
+        </tr>
+        <tr>
+            <td>
+                ID Barang
+            </td>
+            <td>
+                {{barangnya.id}}
+            </td>
+        </tr>
+        <tr>  
+            <td>
+                Nama Barang
+            </td>
+            <td>
+                {{barangnya.namaBarang}}
+            </td>
+        </tr>
+        <tr>  
+            <td>
+                Stok Barang
+            </td>
+            <td>
+                {{barangnya.stok}}
+            </td>
+        </tr>
+        {% if stat == 1 %}
+            <tr>
+                <td>
+                    ID Ruang Barang
+                </td>
+                <td>
+                    <a href="">{{pinjam.tempatKelas.id}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nama Ruang
+                </td>
+                <td>
+                    {{pinjam.tempatKelas.namaRuang}}
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <td>
+                    ID Gedung Barang
+                </td>
+                <td>
+                    <a href="">{{pinjam.tempatGedung.id}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nama Gedung
+                </td>
+                <td>
+                    {{pinjam.tempatGedung.namaGedung}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Perihal Peminjaman
+                </td>
+                <td>
+                    {{pinjam.kodePeminjaman}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Peminjam Barang
+                </td>
+                <td>
+                    {{pinjam.peminjamBarang.nama}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Banyak Peminjaman
+                </td>
+                <td>
+                    {{banyakPinjam}}
+                </td>
+            </tr>
+            {% if banyakPinjam > 0 %}
+            <tr>
+                <td>
+                    Riwayat Peminjaman
+                </td>
+                <td>
+                {% for i in range(0, listPinjam | length)%}
+                    {{listPinjam[i].kodePeminjaman}}
+                    <br>    
+                {% endfor %}
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td>
+                    ID Ruang Barang
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nama Ruang
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <td>
+                    ID Gedung Barang
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nama Gedung
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Perihal Peminjaman
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Peminjam Barang
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Banyak Peminjaman
+                </td>
+                <td>
+                    None
+                </td>
+            </tr>
+        {% endif %}
+        <tr>  
+            <td>
+                BAST Perolehan
+            </td>
+            <td>
+                <a href="/donlotBastP/{{barangnya.id}}" target="_blank"   >download file</a>
+                <br>
+                opt.  <a href="/viewBastP/{{barangnya.id}}" target="_blank"   >view file</a>
+            </td>
+        </tr>
+        {% if stat == 1 %}
+        <tr>  
+            <td>
+                BAST Disposisi Terakhir
+            </td>
+            <td>
+                <a href="/donlotBast/{{pinjam.id}}" target="_blank"   >download file</a>
+                <br>
+                opt.  <a href="/viewBast/{{pinjam.id}}" target="_blank"   > view file</a>
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+    <a href="/lihatBarang">balik</a>
+</div>
+<div class="donlot" style="text-align: center">
+    <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+{% endblock %}

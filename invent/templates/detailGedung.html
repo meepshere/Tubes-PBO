@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+    <script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+</head>
+
+<div class="content" id="printini">
+    <h1 style="text-align: center">Inventaris</h1>
+    <h1 style="text-align: center">Detail Gedung {{gedungnya.namaGedung}} </h1>
+    <table>
+        <tr>
+            <th>
+                Detail
+            </th>
+            <th>
+                Detail
+            </th>
+        </tr>
+        <tr>
+            <td>
+                ID Gedung
+            </td>
+            <td>
+                {{gedungnya.id}}
+            </td>
+        </tr>
+        <tr>  
+            <td>
+                Nama Gedung
+            </td>
+            <td>
+                {{gedungnya.namaGedung}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MG Gedung
+            </td>
+            <td>
+                {{gedungnya.namaGedung}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Banyak Ruang
+            </td>
+            <td>
+                {{banyakRuang}}
+            </td>
+        </tr>
+        {% if banyakRuang > 0 %}
+        <tr>
+            <td>
+                Daftar Ruang
+            </td>
+            <td>
+            {% for i in range(0, dafPinjam | length)%}
+                {{listRuang[i].namaRuang}}
+                <br>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>
+                Banyak Barang
+            </td>
+            <td>
+                {{banyakBarang}}
+            </td>
+        </tr>
+        {% if banyakBarang > 0 %}
+        <tr>
+            <td>
+                Daftar Barang
+            </td>
+            <td>
+            {% for i in range(0, dafPinjam | length)%}
+                {{dafPinjam[i].barangDipinjam.namaBarang}}
+                <br>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td>
+                Banyak Peminjaman
+            </td>
+            <td>
+                {{banyakPinjam}}
+            </td>
+        </tr>
+        {% if banyakPinjam > 0 %}
+        <tr>
+            <td>
+                Daftar Peminjaman
+            </td>
+            <td>
+            {% for i in range(0, listPinjam | length)%}
+                {{listPinjam[i].kodePeminjaman}}
+                <br>    
+            {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+    <a href="/lihatGedung">balik</a>
+</div>
+<div class="donlot" style="text-align: center">
+    <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+    <script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+</head>
+
+<div class="content" id="printini">
+    <h1 style="text-align: center">Inventaris</h1>
+    <h1 style="text-align: center">Detail Peminjaman {{pinjamnya.kodePeminjaman}} </h1>
+    <table>
+        <tr>
+            <th>
+                Detail
+            </th>
+            <th>
+                Detail
+            </th>
+        </tr>
+        <tr>
+            <td>
+                ID Peminjaman
+            </td>
+            <td>
+                {{pinjamnya.id}}
+            </td>
+        </tr>
+        <tr>  
+            <td>
+                Nama Peminjaman
+            </td>
+            <td>
+                {{pinjamnya.kodePeminjaman}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nama Barang
+            </td>
+            <td>
+                {{pinjamnya.barangDipinjam.namaBarang}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Peminjam
+            </td>
+            <td>
+                {{pinjamnya.peminjamBarang.nama}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ID Gedung Peminjaman
+            </td>
+            <td>
+                <a href="">{{pinjamnya.tempatGedung.id}}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nama Gedung
+            </td>
+            <td>
+                {{pinjamnya.tempatGedung.namaGedung}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ID Ruang
+            </td>
+            <td>
+                {{pinjamnya.tempatKelas.id}}
+            </td>
+        </tr>
+        <tr>
+        <tr>
+            <td>
+                Nama Ruang
+            </td>
+            <td>
+                {{pinjamnya.tempatKelas.namaRuang}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Tanggal Peminjaman
+            </td>   
+            <td>
+                {{pinjamnya.tgl}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Status Barang
+            </td>
+            <td>
+                {{pinjamnya.tgl}}
+            </td>
+        </tr>
+        <tr>  
+            <td>
+                BAST Disposisi
+            </td>
+            <td>
+                <a href="/donlotBast/{{pinjamnya.id}}" target="_blank"   >download file</a>
+                <br>
+                opt.  <a href="/viewBast/{{pinjamnya.id}}" target="_blank"   > view file</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/lihatPeminjaman">balik</a>
+</div>
+<div class="donlot" style="text-align: center">
+    <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+{% endblock %}

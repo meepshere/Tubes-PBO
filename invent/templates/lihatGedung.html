@@ -23,9 +23,12 @@
         {% for i in range(0, gedungnya | length) %}
             <tr>
                 <td>{{ gedungnya[i].id }}</td>
-                <td><a href="/menu">{{ gedungnya[i].namaGedung }}</a></td>
+                <td>{{ gedungnya[i].namaGedung }}</td>
                 <td>{{ banyakRuang[i] }}</td>
                 <td>{{ banyakBarang[i] }}</td>
+                <td>
+                    <a href="/detailGedung/{{gedungnya[i].id}}">detail</a>
+                </td>
             </tr>
         {% endfor %}
     </table>

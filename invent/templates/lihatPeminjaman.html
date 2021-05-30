@@ -9,6 +9,7 @@
 {% block body %}
 <div class="content" id="printini">
     <h1 style="text-align: center">Inventaris</h1>
+    <h1 style="text-align: center">{{judul}}</h1>
     {% if dafPinjam |length < 1 %}
     <h4 style="text-align: center">gaada barang bang..</h4>
     {% else %}
@@ -30,7 +31,7 @@
                 <td>{{ dafPinjam[i].tgl }}</td>
                 <td>{{ dafPinjam[i].tgl2 }}</td>
                 <td>
-                    <a href="">lihat</a>
+                    <a href="/detailPeminjaman/{{dafPinjam[i].id}}">detail</a>
                     <br>
                     <a href="/viewBast/{{dafPinjam[i].id}}" target="_blank"   >download file</a>
                 </td>
@@ -45,6 +46,19 @@
 
 <div class="donlot" style="text-align: center">
     <button class="btn btn-primary" id="download"> download pdf</button>
+</div>
+<div class="form">
+    <form action="/lihatPeminjaman" method="POST" enctype="multipart/form-data">
+        <a>Lihat peminjaman pada barang :</a>
+        <br>
+        <select name="barangnya" id="barangnya" required>
+            {% for t in dafBarang %}
+            <option value={{t.id}}>{{t.namaBarang}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="lihat ruang">
+    </form>
+    <a href="/lihatPeminjaman">reset</a>
 </div>
 <script>
     country_select = document.getElementById('gedungnya');

@@ -224,8 +224,29 @@ def lihatPegawai():
 def lihatPeminjaman():
     try:
         if 'user' in session or 'admin' in session:
-            dafPinjam = Peminjaman.query.all()
-            return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam)
+            if request.method == 'POST':
+                barangnya = request.form['barangnya']
+                dafBarang = Barang.query.all()
+                dafBarang2 = []
+                for i in dafBarang:
+                    temp = Peminjaman.query.filter_by(benda=i.id).first()
+                    if temp:
+                        dafBarang2.append(i)
+                dafPinjam = Peminjaman.query.filter_by(benda=int(barangnya))
+                dafPinjam2 = []
+                for i in dafPinjam:
+                    dafPinjam2.append(i)
+                return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam2, dafBarang=dafBarang2)
+
+            else:
+                dafPinjam = Peminjaman.query.all()
+                dafBarang = Barang.query.all()
+                dafBarang2 = []
+                for i in dafBarang:
+                    temp = Peminjaman.query.filter_by(benda=i.id).first()
+                    if temp:
+                        dafBarang2.append(i)
+                return render_template('lihatPeminjaman.html', dafPinjam=dafPinjam, dafBarang=dafBarang2)
         else:
             return redirect('/')
     except:
@@ -302,20 +323,21 @@ def logoutbye():
     try:
         global pengguna
         global jabatan
+        
+        if 'user' in session:
+            session.pop('user', None)
+
+        if 'admin' in session:
+            session.pop('admin', None)
+
         try:
             del pengguna
             del jabatan
-            if 'user' in session:
-                session.pop('user', None)
-                return 'done user'
-
-            if 'admin' in session:
-                session.pop('admin', None)
-                return 'done admin'
-            
-            return 'not done'
+            return 'done'
         except:
             return redirect('/')
+         
+        return 'not done'
     except:
         return redirect('/')
     
@@ -373,9 +395,155 @@ def viewBast(namaFile):
     except:
         return redirect('/')
 
-# @app.route('/helolo')
-# def helolo():
-#     orang = Manusia.query.filter_by(id=1).first()
-#     pengguna = userNow(orang, orang.id, orang.sandi, orang.nama)
-#     halo = str(pengguna.getNama())
-#     return render_template('menu.html', halo=halo
+@app.route('/donlotBastP/<namaFile>')
+def donlotBastP(namaFile):
+    try:
+        if 'user' in session or 'admin' in session:
+            file_data = Barang.query.filter_by(id=namaFile).first()
+
+            return send_file(BytesIO(file_data.bastPerolehanData), attachment_filename=file_data.bastPerolehan, as_attachment=True, cache_timeout=0)
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+@app.route('/viewBastP/<namaFile>')
+def viewBastP(namaFile):
+    try:
+        if 'user' in session or 'admin' in session:
+            file_data = Barang.query.filter_by(id=namaFile).first()
+
+            return Response(file_data.bastPerolehanData, mimetype=file_data.bastPMimtype)
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+@app.route('/detailRuang/<int:id>', methods=['POST', 'GET'])
+def detailRuang(id):
+    try:
+        if 'user' in session or 'admin' in session:
+            ruangnya = Ruang.query.filter_by(id=id).first()
+
+            brg = Barang.query.all()
+            dataPinjam = []
+            dataPinjam2 = []
+            banyakBarang = 0
+            banyakPinjam = 0
+            for task in brg:
+                # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                if pinjam:
+                    dataPinjam.append(pinjam)
+            
+            for i in dataPinjam:
+                if i.kel == int(id):
+                    dataPinjam2.append(i)
+                    banyakBarang += 1
+            
+            listPinjam2 = Peminjaman.query.filter_by(kel=id)
+            listPinjam = []
+
+            for i in listPinjam2:
+                banyakPinjam += 1
+                listPinjam.append(i)
+            
+            return render_template('detailRuang.html', id=id, dafPinjam=dataPinjam2, ruangnya=ruangnya, banyakBarang=banyakBarang, listPinjam=listPinjam, banyakPinjam=banyakPinjam)
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+
+@app.route('/detailGedung/<int:id>', methods=['POST', 'GET'])
+def detailGedung(id):
+    try:
+        if 'user' in session or 'admin' in session:
+            gedungnya = Gedung.query.filter_by(id=id).first()
+            
+            brg = Barang.query.all()
+            dataPinjam = []
+            dataPinjam2 = []
+            banyakBarang = 0
+            banyakPinjam = 0
+            for task in brg:
+                # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
+                pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
+                if pinjam:
+                    dataPinjam.append(pinjam)
+            
+            for i in dataPinjam:
+                if i.ged == int(id):
+                    dataPinjam2.append(i)
+                    banyakBarang += 1
+            
+            dataPinjam = Ruang.query.filter_by(ged_id=id)
+            listRuang = []
+            banyakRuang = 0
+            for i in dataPinjam:
+                listRuang.append(i)
+                banyakRuang += 1
+            
+            listPinjam2 = Peminjaman.query.filter_by(ged=id)
+            listPinjam = []
+
+            for i in listPinjam2:
+                banyakPinjam += 1
+                listPinjam.append(i)
+            
+            return render_template('detailGedung.html', id=id, dafPinjam=dataPinjam2, gedungnya=gedungnya, banyakBarang=banyakBarang, listPinjam=listPinjam, banyakPinjam=banyakPinjam, listRuang=listRuang, banyakRuang=banyakRuang)
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+@app.route('/detailBarang/<int:id>', methods=['POST', 'GET'])
+def detailBarang(id):
+    try:
+        if 'user' in session or 'admin' in session:
+            barangnya = Barang.query.filter_by(id=id).first()
+            pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=id).first()
+            listPinjam2 = Peminjaman.query.filter_by(benda=id)
+            banyakPinjam = 0
+            listPinjam = []
+            stat = 0
+
+            for i in listPinjam2:
+                banyakPinjam += 1
+                listPinjam.append(i)
+
+            if pinjam:
+                stat = 1
+
+            return render_template('detailBarang.html', id=id, barangnya=barangnya, pinjam=pinjam, listPinjam=listPinjam, banyakPinjam=banyakPinjam, stat=stat)
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
+@app.route('/detailPeminjaman/<int:id>')
+def detailPeminjaman(id):
+    try:
+        if 'user' in session or 'admin' in session:
+            pinjamnya = Peminjaman.query.filter_by(id=id).first()
+
+            return render_template('detailPeminjaman.html', id=id, pinjamnya=pinjamnya)
+
+    except:
+        return redirect('/')
+@app.route('/detailPegawai/<int:id>')
+def detailPegawai(id):
+    try:
+        if 'user' in session or 'admin' in session:
+            pegawainya = Manusia.query.filter_by(id=id).first()
+            pinjam = Peminjaman.query.filter_by(peminjam=id)
+            listPinjam = []
+            banyakPinjam = 0
+
+            for i in pinjam:
+                listPinjam.append(i)
+                banyakPinjam += 1
+
+            return render_template('detailPegawai.html', id=id, pegawainya=pegawainya, banyakPinjam=banyakPinjam, listPinjam=listPinjam)
+    except:
+        return redirect('/')
