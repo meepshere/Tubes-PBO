@@ -1,10 +1,46 @@
 {% extends 'base.html' %}
 
 {% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 <title>Inventaris</title>
 {% endblock %}
 
 {% block body %}
+
+<section class="side">
+    <img src="{{url_for('static', filename='img/Warehouse.jpg')}}" alt="">
+</section>
+<section class="main">
+    <div class="login-container">
+        <p class="title">Welcome back</p>
+        <div class="separator"></div>
+        <p class="welcome-message">Please, provide login credential to proceed and have access to all our services</p>
+       
+        <form action="/" method="POST" class="login-form">
+            <div class="form-control">
+                <input type="text" placeholder="Username" name="namaa" required> 
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="form-control">
+                <input type="password" placeholder="Password" name="sandi" required>
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <button class="submit">Login</button>
+        </form>
+          <div class="underlineEffects"> 
+          <ul>
+             <li> <a class='create' href="/Register">Dont Have acount ?</a> </li> 
+             <br>
+             <!-- <li> <a class='about' href="about"> About Us </a> </li> -->
+          </ul>
+          </div>
+    </div>
+</section>
+
+<!--
 <div class="form">
     <form action="/" method="POST">
         <a>id bang</a>
@@ -15,4 +51,5 @@
         <input type="submit" value="coba">
     </form>
 </div>
+-->
 {% endblock %}
