@@ -10,7 +10,7 @@ body{
   position: relative;
   min-height: 100vh;
   width: 100%;
- /* overflow: hidden;
+  overflow: hidden;
   /* if over flow not hidden it can be scrolled*/
 }
 .content h1{
@@ -241,7 +241,7 @@ body{
   height: 100%;
   width: calc(100% - 78px);
   left: 78px;
-  background: #E4E9F7;
+  background: #c4d3f6;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2px);
   transition: all 0.5s ease;
 }
