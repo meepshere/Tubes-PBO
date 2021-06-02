@@ -1,19 +1,257 @@
 {% extends 'base.html' %}
 
 {% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
+<script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="{{ url_for ('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for ('static', filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for ('static', filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href= "{{ url_for ('static', filename='vendor/perfect-scrollbar/perfect-scrollbar.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for ('static', filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for ('static', filename='css/main.css')}}">
+<!--===============================================================================================-->
+<!-- Boxicons CDN Link -->
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 <title>Inventaris</title>
 {% endblock %}
 
 {% block body %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="{{ url_for('static', filename="js/basepdf.js") }}""></script>
-    <script src="{{ url_for('static', filename="js/pdf.js") }}""></script>
-</head>
+<body>
+    <div class="sidebar">
+      <div class="logo_content">
+        <div class="logo">
+          <i class='bx bx-meteor' ></i>
+          <div class="logo_name">INVNT</div>
+        </div>
+        <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav_list">
+        <li>
+          <a href="/menu">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+          <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+            <a href="/lihatBarang">
+                <i class='bx bxs-shopping-bags'></i>
+                <span class="links_name">Daftar Barang</span>
+              </a>
+              <span class="tooltip">Daftar Barang</span>
+        </li>
+        <li>
+          <a href="/lihatRuang">
+            <i class='bx bx-home-smile'></i>
+            <span class="links_name">Data Ruang</span>
+          </a>
+          <span class="tooltip">Data Ruang</span>
+        </li>
+        <li>
+          <a href="/lihatGedung">
+            <i class='bx bx-buildings'></i>
+            <span class="links_name">Data Gedung</span>
+          </a>
+          <span class="tooltip">Data Gedung</span>
+        </li>
+        <li>
+          <a href="/lihatPegawai">
+            <i class='bx bx-group'></i>
+            <span class="links_name">Data Pegawai</span>
+          </a>
+          <span class="tooltip">Data Pegawai</span>
+        </li>
+        <li>
+          <a href="/lihatPeminjaman">
+            <i class='bx bxs-folder-open'></i>
+            <span class="links_name">Data Peminjaman</span>
+          </a>
+          <span class="tooltip">Data Peminjaman</span>
+        </li>
+        <li>
+          <a href="/inputPinjam">
+            <i class='bx bxs-cart-add'></i>
+            <span class="links_name">Input Peminjaman</span>
+          </a>
+          <span class="tooltip">Input Peminjaman</span>
+        </li>
+        <li>
+          <a href="/inputMenu">
+            <i class='bx bx-wrench'></i>
+            <span class="links_name">Input Admin</span>
+          </a>
+          <span class="tooltip">Input Admin</span>
+        </li>
+      </ul>
+      <div class="profile_content">
+        <div class="profile">
+          <div class="profile_details">
+            <!--<img src="profile.jpg" alt="">-->
+            <div class="name_job">
+              <div class="name">{{ halo }}</div>
+              <div class="job">Web Designer</div>
+            </div>
+          </div>
+          <a href="/logoutbye">
+          <i class='bx bx-log-out' id="log_out" ></i>
+          </a>
+      </div>
+      </div>
+    </div>
+    <!-- End sidebar-->
+    <div class="home_content">
+        <div class="limiter" id="printini">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <h1 style="text-align: center">Detail Gedung {{gedungnya.namaGedung}} </h1>
+                        <div class="table">
+        
+                            <div class="row header">
+                                <div class="cell">
+                                    Detail
+                                </div>
+                                <div class="cell">
+                                    Detail
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    ID Gedung
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                    {{gedungnya.id}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Nama Gedung
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                    {{gedungnya.namaGedung}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    MG Gedung
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                    {{gedungnya.mg_gedung}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Banyak Ruang
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                    {{banyakRuang}}
+                                </div>
+                            </div>
+                            {% if banyakRuang > 0 %}
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Daftar Ruang
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                {% for i in range(0, listRuang | length)%}
+                                    <a href="/detailRuang/{{listRuang[i].id}}">{{listRuang[i].namaRuang}}</a>
+                                    <br>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Banyak Barang
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                    {{banyakBarang}}
+                                </div>
+                            </div>
+                            {% if banyakBarang > 0 %}
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Daftar Barang
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                {% for i in range(0, dafPinjam | length)%}
+                                    {{dafPinjam[i].barangDipinjam.namaBarang}}
+                                    <br>
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Banyak Peminjaman
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                    {{banyakPinjam}}
+                                </div>
+                            </div>
+                            {% if banyakPinjam > 0 %}
+
+                            <div class="row">
+                                <div class="cell" data-title="ID Barang">
+                                    Daftar Peminjaman
+                                </div>
+                                <div class="cell" data-title="ID Barang">
+                                {% for i in range(0, listPinjam | length)%}
+                                    {{listPinjam[i].kodePeminjaman}}
+                                    <br>    
+                                {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            </div>
+                            <div class="donlot" style="text-align: center">
+                                <button class="btn btn-primary" id="download"> download pdf</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //SideBar Menu//
+    let btn = document.querySelector("#btn");
+    let sidebar = document.querySelector(".sidebar");
+    let searchBtn = document.querySelector(".bx-search");
+
+    btn.onclick = function() {  
+    sidebar.classList.toggle("active");
+    if(btn.classList.contains("bx-menu")){
+    btn.classList.replace("bx-menu" , "bx-menu-alt-right");
+  }else{
+    btn.classList.replace("bx-menu-alt-right", "bx-menu");
+  }
+}
+    </script>
+  
+  </body>
+
+
+
+<!-- 
 <div class="content" id="printini">
     <h1 style="text-align: center">Inventaris</h1>
     <h1 style="text-align: center">Detail Gedung {{gedungnya.namaGedung}} </h1>
@@ -119,4 +357,5 @@
 <div class="donlot" style="text-align: center">
     <button class="btn btn-primary" id="download"> download pdf</button>
 </div>
+-->
 {% endblock %}

@@ -141,19 +141,19 @@
                                 
                                 {% for i in range(0, gedungnya | length) %}
                                     <div class="row">
-                                        <div class="cell" data-title="Nama User">
+                                        <div class="cell" data-title="ID Gedung">
                                             {{ gedungnya[i].id }}
                                         </div>
-                                        <div class="cell" data-title="ID User">
+                                        <div class="cell" data-title="Nama Gedung">
                                             {{ gedungnya[i].namaGedung }}
                                         </div>
-                                        <div class="cell" data-title="Alamat">
+                                        <div class="cell" data-title="Banyak Ruang">
                                             {{ banyakRuang[i] }}
                                         </div>
-                                        <div class="cell" data-title="No Telepon">
+                                        <div class="cell" data-title="Banyak Barang">
                                             {{ banyakBarang[i] }}
                                         </div>
-                                        <div class="cell" data-title="Meminjam">
+                                        <div class="cell" data-title="">
                                             <a href="/detailGedung/{{gedungnya[i].id}}">detail</a>
                                         </div>
                                     </div>

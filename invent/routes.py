@@ -406,7 +406,7 @@ def logoutbye():
         try:
             del pengguna
             del jabatan
-            return 'done'
+            return redirect('/')
         except:
             return redirect('/')
          

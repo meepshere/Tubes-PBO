@@ -53,7 +53,8 @@ button{
     cursor: pointer;
     display: block;
     margin: auto;
-    background: #FAD0C9;
+    color: #fff;
+    background: #007bff;
     border: 0;
     outline: none;
     border-radius: 30px

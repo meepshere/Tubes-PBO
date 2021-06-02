@@ -143,28 +143,28 @@
                                 
                                 {% for i in range(0, pegawainya | length) %}
                                     <div class="row">
-                                        <div class="cell" data-title="Nama User">
+                                        <div class="cell" data-title="ID Pegawai">
                                             {{ pegawainya[i].id }}
                                         </div>
-                                        <div class="cell" data-title="ID User">
+                                        <div class="cell" data-title="Nama Pegawai">
                                             {{ pegawainya[i].nama }}
                                         </div>
-                                        <div class="cell" data-title="Alamat">
+                                        <div class="cell" data-title="Alamat Pegawai">
                                             {{ pegawainya[i].alamat }}
                                         </div>
-                                        <div class="cell" data-title="No Telepon">
+                                        <div class="cell" data-title="No Telepon Pegawai">
                                             {{ pegawainya[i].no_telp }}
                                         </div>
                                         {% if pegawainya[i].role == 1 %}
-                                        <div class="cell" data-title="No Telepon">
+                                        <div class="cell" data-title="Role">
                                             Admin
                                         </div>
                                         {% else %}
-                                        <div class="cell" data-title="No Telepon">
+                                        <div class="cell" data-title="Role">
                                             Pegawai
                                         </div>
                                         {% endif %}
-                                        <div class="cell" data-title="Meminjam">
+                                        <div class="cell" data-title="">
                                             <a href="/detailPegawai/{{pegawainya[i].id}}">detail</a>
                                         </div>
                                     </div>

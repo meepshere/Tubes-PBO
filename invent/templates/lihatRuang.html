@@ -140,19 +140,19 @@
                                 
                                 {% for i in range(0, ruangnya | length) %}
                                     <div class="row">
-                                        <div class="cell" data-title="Nama User">
+                                        <div class="cell" data-title="ID Ruang">
                                             {{ ruangnya[i].id }}
                                         </div>
-                                        <div class="cell" data-title="ID User">
+                                        <div class="cell" data-title="Nama Ruang">
                                             {{ ruangnya[i].namaRuang }}
                                         </div>
-                                        <div class="cell" data-title="Alamat">
+                                        <div class="cell" data-title="Gedung">
                                             {{ ruangnya[i].beradaPadaGedung.namaGedung }}
                                         </div>
-                                        <div class="cell" data-title="No Telepon">
+                                        <div class="cell" data-title="Banyak Barang">
                                             {{ banyakBarang[i] }}
                                         </div>
-                                        <div class="cell" data-title="Meminjam">
+                                        <div class="cell" data-title="">
                                             <a href="/detailRuang/{{ruangnya[i].id}}">detail</a>
                                         </div>
                                     </div>
@@ -169,7 +169,10 @@
                                             <option value={{t.id}}>{{t.namaGedung}}</option>
                                             {% endfor %}
                                         </select>
-                                        <input type="submit" value="lihat barang">
+                                        <br>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary" > Lihat Barang</button>
+                                        
                                     </form>
                                 </div>
                                 <div class="donlot" style="text-align: center">

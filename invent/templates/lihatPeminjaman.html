@@ -145,25 +145,26 @@
                                 {% for i in range(0, dafPinjam | length) %}
                                     <div class="row">
 
-                                        <div class="cell" data-title="Nama User">
+                                        <div class="cell" data-title="Perihal Peminjaman">
                                             {{ dafPinjam[i].kodePeminjaman }}
                                         </div>
-                                        <div class="cell" data-title="ID User">
+                                        <div class="cell" data-title="Nama Barang">
                                             {{ dafPinjam[i].barangDipinjam.namaBarang }}
                                         </div>
-                                        <div class="cell" data-title="Alamat">
+                                        <div class="cell" data-title="Gedung">
                                             {{ dafPinjam[i].tempatGedung.namaGedung }}
                                         </div>
-                                        <div class="cell" data-title="No Telepon">
+                                        <div class="cell" data-title="Ruang">
                                             {{ dafPinjam[i].tempatKelas.namaRuang }}
                                         </div>
-                                        <div class="cell" data-title="Meminjam">
+                                        <div class="cell" data-title="Tanggal Pinjam">
                                             {{ dafPinjam[i].tgl }}
                                         </div>
-                                        <div class="cell" data-title="Meminjam">
+                                        <div class="cell" data-title="Kondisi">
                                             {{ dafPinjam[i].kondisi }}
                                         </div>
-                                        <div class="cell" data-title="Meminjam">
+
+                                        <div class="cell" data-title="" style="text-align: center;">
                                             <a href="/detailPeminjaman/{{dafPinjam[i].id}}">detail</a>
                                             <br>
                                             <a href="/viewBast/{{dafPinjam[i].id}}" target="_blank">download file</a>
@@ -201,8 +202,12 @@
                                             <option value={{t.id}}>{{t.namaBarang}}</option>
                                             {% endfor %}
                                         </select>
-                                        <input type="submit" value="find">
+                                        <br>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary" > Find</button>
+                                        <!-- <input type="submit" value="find"> -->
                                     </form>
+                                   
                                     <a href="/lihatPeminjaman">reset</a>
                                 </div>
                                 <div class="donlot" style="text-align: center">
