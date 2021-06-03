@@ -114,9 +114,10 @@
         <h4>Ruangan yang dicari tidak ada</h4>
         {% else %}
         <h1 class="judul">DATA RUANGAN</h1>
-            <div class="limiter" id="printini">
+            <div class="limiter">
                 <div class="container-table100">
                     <div class="wrap-table100">
+                      <div id="printini">
                         <h1 style="text-align: center">Data {{judul}}</h1>
                             <div class="table">
         
@@ -159,6 +160,7 @@
                                 {% endfor %}
                                 </div>
                                 {% endif %}
+                        </div>
                                 <div class="form">
                                     <form action="/lihatRuang" method="POST" enctype="multipart/form-data">
                                         <a>Gedung bang :</a>

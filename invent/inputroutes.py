@@ -110,7 +110,10 @@ def inputRuang():
 def findRuang(get_ruang):
     try:
         if 'user' in session or 'admin' in session:
-            ruang = Ruang.query.filter_by(ged_id=get_ruang)
+            if(int(get_ruang) != 0):
+                ruang = Ruang.query.filter_by(ged_id=get_ruang)
+            else:
+                ruang = Ruang.query.all()
             ruangArray = []
             for i in ruang:
                 rObj = {}

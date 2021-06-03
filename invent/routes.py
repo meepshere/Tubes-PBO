@@ -329,14 +329,15 @@ def inputPinjam():
         if 'user' in session or 'admin' in session:
             dafGedung = Gedung.query.all()
             dafBarang = Barang.query.all()
-            dafKelas = Ruang.query.filter_by(ged_id=1)
+            dafKelas = Ruang.query.all()
             if request.method == 'POST':
                 if request.form['ruangnya'] != '':
                     global pengguna
                     nama = request.form['nama']
                     barangnya = request.form['barangnya']
-                    gedungnya = request.form['gedungnya']
                     ruangnya = request.form['ruangnya']
+                    gedungnyat = Ruang.query.filter_by(id=ruangnya).first()
+                    gedungnya = gedungnyat.ged_id
                     file = request.files['inputFile']
                     kondisi = request.form['kondisi']
                     tgl = request.form['tgl']

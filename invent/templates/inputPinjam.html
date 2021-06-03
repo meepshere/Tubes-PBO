@@ -112,6 +112,7 @@
             <br> <br>
             <label for="gedungnya">Gedung : </label>
             <select class="opt" name="gedungnya" id="gedungnya" required>
+                <option value=0></option>
                 {% for t in dafGedung %}
                 <option value={{t.id}}>{{t.namaGedung}}</option>
                 {% endfor %}
