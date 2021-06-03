@@ -21,7 +21,7 @@ def inputBarang():
                     newFile = Barang(namaBarang=nama, stok=stok, bastPerolehan=file.filename, bastPerolehanData=file.read(), bastPMimtype=mimtipe)
                     db.session.add(newFile)
                     db.session.commit()
-                    return "noice"
+                    return redirect('/lihatBarang')
                 except:
                     return "false"
             else:
@@ -46,7 +46,7 @@ def inputManusia():
                     newFile = Manusia(id=id, nama=nama, sandi=sandi, alamat=alamat, no_telp=notelp, role=0)
                     db.session.add(newFile)
                     db.session.commit()
-                    return "noice"
+                    return redirect('/lihatPegawai')
                 except:
                     return "false"
             else:
@@ -68,7 +68,7 @@ def inputGedung():
                         newFile = Gedung(namaGedung=nama, mg_gedung=int(pegawainya))
                         db.session.add(newFile)
                         db.session.commit()
-                        return "noice"
+                        return redirect('/lihatGedung')
                     except:
                         return "gagal"
                 else:
@@ -94,7 +94,7 @@ def inputRuang():
                         kelas_baru = Ruang(namaRuang=nama, ged_id=tempat.id, pj_ruang=int(pegawainya))
                         db.session.add(kelas_baru)
                         db.session.commit()
-                        return "noice"
+                        return redirect('/lihatRuang')
                     except:
                         return 'gatau gagal'
             else:

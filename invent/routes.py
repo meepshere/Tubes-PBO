@@ -264,7 +264,7 @@ def lihatPeminjaman():
                 ruangnya = request.form['ruangnya']
                 gedungnya = request.form['gedungnya']
                 dafGedung = Gedung.query.all()
-                dafKelas = []
+                dafKelas = Ruang.query.all()
                 if int(barangnya) != 0:
                     keyword = Barang.query.get_or_404(int(barangnya))
                     keyword = keyword.namaBarang
@@ -312,7 +312,7 @@ def lihatPeminjaman():
                     return redirect('/lihatPeminjaman')
             else:
                 dafGedung = Gedung.query.all()
-                dafKelas = []
+                dafKelas = Ruang.query.all()
                 dafPinjam = Peminjaman.query.all()
                 dafBarang = Barang.query.all()
                 dafBarang2 = []
@@ -351,7 +351,7 @@ def inputPinjam():
                     newFile = Peminjaman(kodePeminjaman=nama, benda=barangnya, peminjam=pengguna.getID(), ged=gedungnya, kel=ruangnya, bast=file.filename, bastData=file.read(), bastMimtype=mimtipe, tgl=tgl, kondisi=kondisi)
                     db.session.add(newFile)
                     db.session.commit()
-                    return "noice"
+                    return redirect('/lihatPeminjaman')
                     #except:
                         #return 'gatau gagal'
                 else:
@@ -598,6 +598,22 @@ def detailBarang(id):
     except:
         return redirect('/')
 
+@app.route('/editkondisi/<int:id>', methods=['POST'])
+def editkondisi(id):
+    try:
+        if 'user' in session or 'admin' in session:
+            barangnya = Barang.query.get_or_404(id)
+            pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=barangnya.id).first()
+
+            kondisiBaru = request.form['editkon']
+            pinjam.kondisi = str(kondisiBaru)
+            db.session.commit()
+            return redirect('/detailBarang/{}'.format(id))
+        else:
+            return redirect('/')
+    except:
+        return redirect('/')
+
 @app.route('/detailPeminjaman/<int:id>')
 def detailPeminjaman(id):
     try:
@@ -630,8 +646,6 @@ def detailPegawai(id):
 def findBarang(get_brg):
     try:
         if 'user' in session or 'admin' in session:
-            roomName = Ruang.query.filter_by(id=int(get_brg)).first()
-            roomName = roomName.namaRuang
             
             brg = Barang.query.all()
             dataPinjam = []
@@ -645,10 +659,15 @@ def findBarang(get_brg):
                 if pinjam:
                     dataPinjam.append(pinjam)
             
-            for i in dataPinjam:
-                if i.kel == int(get_brg):
+            if(int(get_brg) == 0):
+                for i in dataPinjam:
                     dataPinjam2.append(i)
                     stats.append(1)
+            else:
+                for i in dataPinjam:
+                    if i.kel == int(get_brg):
+                        dataPinjam2.append(i)
+                        stats.append(1)
             
             brgArray = []
             for i in dataPinjam2:
@@ -668,25 +687,25 @@ def findBarang(get_brg):
 def findBarangG(get_brg):
     try:
         if 'user' in session or 'admin' in session:
-            roomName = Ruang.query.filter_by(id=int(get_brg)).first()
-            roomName = roomName.namaRuang
-            
             brg = Barang.query.all()
             dataPinjam = []
             dataPinjam2 = []
             stats = []
-            dafGedung = Gedung.query.all()
-            dafKelas = Ruang.query.filter_by(ged_id=1)
             for task in brg:
                 # e = Ruang.query.order_by(Ruang.id.desc()).filter_by(ged_id=2).first()
                 pinjam = Peminjaman.query.order_by(Peminjaman.id.desc()).filter_by(benda=task.id).first()
                 if pinjam:
                     dataPinjam.append(pinjam)
             
-            for i in dataPinjam:
-                if i.ged == int(get_brg):
+            if(int(get_brg) == 0):
+                for i in dataPinjam:
                     dataPinjam2.append(i)
                     stats.append(1)
+            else:
+                for i in dataPinjam:
+                    if i.ged == int(get_brg):
+                        dataPinjam2.append(i)
+                        stats.append(1)
             
             brgArray = []
             for i in dataPinjam2:
@@ -695,7 +714,6 @@ def findBarangG(get_brg):
                 rObj['name'] = i.barangDipinjam.namaBarang
                 brgArray.append(rObj)
             return jsonify({'brgarray' : brgArray})
-            
         else:
             return redirect('/')
     except:

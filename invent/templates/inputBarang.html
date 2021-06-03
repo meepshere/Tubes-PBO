@@ -98,15 +98,15 @@
 
     <div class="home_content"> 
         <div class="wrapper">
-            <form action="/inputBarang" method="POST">
+            <form action="/inputBarang" method="POST"  enctype="multipart/form-data">
                 <h1>INPUT Barang Baru</h1>
                 <br>
                 <input type="text" name="nama" placeholder="Nama Barang" required/>
-                <br> <br>
+                <br> <br> 
                 <input type="number" name="stokc" placeholder="Stok" required/>
                 <br> <br>
                 <label for="inputFile">BAST Perolehan: </label>
-                <input type="file" name="inputFile" accept="application/pdf, image/jpeg" required>   
+                <input type="file" name="inputFile" accept="application/pdf, image/jpeg" required/>   
                 <br> <br> <br>
                 <button type="submit" class="login-btn">Add Barang</button>
             </form>
