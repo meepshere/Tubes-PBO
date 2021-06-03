@@ -40,7 +40,9 @@ def index():
             return redirect('/')
     else:
         return render_template('index2.html')
-
+@app.route('/about', methods=['POST'])
+def about():
+    return render_template('about.html')
 
 @app.route('/menu', methods=['POST', 'GET'])
 def menu():

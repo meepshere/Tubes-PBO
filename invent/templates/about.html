@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+<title>Inventaris</title>
+{% endblock %}
+
+{% block body %}
+
+
+    <h1 class="text-center">Meet The Team</h1>
+
+	
+	<div class="container">
+	<div class="row">
+	
+	<!--team-1-->
+	<div class="col-lg-4">
+	<div class="our-team-main">
+	
+	<div class="team-front">
+	<img src="{{url_for('static', filename='img/sayyid.jpg')}}" class="img-fluid" />
+	<h3>Sayyid Haris</h3>
+	<p>Backend Developer</p>
+	</div>
+	
+	<div class="team-back">
+		<span>
+		Find Me On 
+		<br>
+		<br>
+		<a class="instagram" href="https://www.instagram.com/mipudip/" target="_blank">
+			<img class="instagram" src="{{url_for('static', filename='img/instagram.png')}}"/>
+		</a>
+		<a class="github" href="https://github.com/meepshere" target="_blank">
+			<img class="github" src="{{url_for('static', filename='img/github.png')}}"/>
+		</a>
+	
+		</span>
+		</div>
+	
+	</div>
+	</div>
+	<!--team-1-->
+	
+	<!--team-2-->
+	<div class="col-lg-4">
+	<div class="our-team-main">
+	
+	<div class="team-front">
+        <img src="{{url_for('static', filename='img/auuu.png')}}" class="img-fluid" />
+	<h3>Auriga Farhan </h3>
+	<p>Frontend Developer and Web Designer</p>
+	</div>
+	
+	<div class="team-back">
+	<span>
+	Find Me On 
+	<br>
+	<br>
+	<a class="instagram" href="https://www.instagram.com/aurigaf/" target="_blank">
+		<img class="instagram" src="{{url_for('static', filename='img/instagram.png')}}"/>
+	</a>
+	<a class="github" href="https://github.com/nadeeee" target="_blank">
+		<img class="github" src="{{url_for('static', filename='img/github.png')}}"/>
+	</a>
+
+	</span>
+	</div>
+	
+	</div>
+	</div>
+	<!--team-2-->
+	
+	<!--team-3-->
+	<div class="col-lg-4">
+	<div class="our-team-main">
+	
+	<div class="team-front">
+		<img src="{{url_for('static', filename='img/simok.png')}}" class="img-fluid" />
+	<h3>M.Daffa Masimiliano</h3>
+	<p>Tester and Designer</p>
+	</div>
+	
+	<div class="team-back">
+		<span>
+		Find Me On 
+		<br>
+		<br>
+		<a class="instagram" href="https://www.instagram.com/daff.massimo/" target="_blank">
+			<img class="instagram" src="{{url_for('static', filename='img/instagram.png')}}"/>
+		</a>
+		<a class="github" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
+			<img class="github" src="{{url_for('static', filename='img/github.png')}}"/>
+		</a>
+	
+		</span>
+		</div>
+	
+	</div>
+	</div>
+	<!--team-3-->
+
+	</div>
+	</div>
+{% endblock %}
