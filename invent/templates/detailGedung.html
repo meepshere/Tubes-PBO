@@ -110,9 +110,10 @@
     </div>
     <!-- End sidebar-->
     <div class="home_content">
-        <div class="limiter" id="printini">
+        <div class="limiter">
             <div class="container-table100">
                 <div class="wrap-table100">
+                    <div id="printini">
                     <h1 style="text-align: center">Detail Gedung {{gedungnya.namaGedung}} </h1>
                         <div class="table">
         
@@ -191,7 +192,7 @@
                                 </div>
                                 <div class="cell" data-title="ID Barang">
                                 {% for i in range(0, dafPinjam | length)%}
-                                    {{dafPinjam[i].barangDipinjam.namaBarang}}
+                                    <a href="/detailBarang/{{dafPinjam[i].barangDipinjam.id}}">{{dafPinjam[i].barangDipinjam.namaBarang}}</a>
                                     <br>
                                 {% endfor %}
                                 </div>
@@ -214,12 +215,13 @@
                                 </div>
                                 <div class="cell" data-title="ID Barang">
                                 {% for i in range(0, listPinjam | length)%}
-                                    {{listPinjam[i].kodePeminjaman}}
+                                <a href="/detailPeminjaman/{{listPinjam[i].id}}">{{listPinjam[i].kodePeminjaman}}</a>
                                     <br>    
                                 {% endfor %}
                                 </div>
                             </div>
                             {% endif %}
+                            </div>
                             </div>
                             <div class="donlot" style="text-align: center">
                                 <button class="btn btn-primary" id="download"> download pdf</button>

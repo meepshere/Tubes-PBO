@@ -112,9 +112,10 @@
         <h4 style="text-align: center;">Tidak Ada Peminjaman</h4>
         {% else %}
         <h1 class="judul">DAFTAR BARANG</h1>
-            <div class="limiter" id="printini">
+            <div class="limiter">
                 <div class="container-table100">
                     <div class="wrap-table100">
+                      <div id="printini">
                         <h1 style="text-align: center">Data {{judul}}</h1>
                             <div class="table">
         
@@ -174,9 +175,10 @@
                                 {% endfor %}
                                 </div>
                                 {% endif %}
+                      </div>
                                 <div class="form">
                                     <form action="/lihatPeminjaman" method="POST" enctype="multipart/form-data">
-                                        <a>Gedung bang :</a>
+                                        <a>Gedung :</a>
                                         <br>
                                         <select name="gedungnya" id="gedungnya">
                                             <option value=0></option>
@@ -185,7 +187,7 @@
                                             {% endfor %}
                                         </select>
                                         <br>
-                                        <a>Ruang bang :</a>
+                                        <a>Ruang :</a>
                                         <br>
                                         <select name="ruangnya" id="ruangnya">
                                             <option value=0></option>

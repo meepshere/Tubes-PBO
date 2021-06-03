@@ -113,11 +113,12 @@
         <h4 style="text-align: center;">Tidak Ada Data</h4>
         {% else %}
         <h1 class="judul">DAFTAR PEGAWAI</h1>
-            <div class="limiter" id="printini">
+            <div class="limiter">
                 <div class="container-table100">
                     <div class="wrap-table100">
                         <h1 style="text-align: center"></h1>
-                            <div class="table">
+                        <div id="printini">
+                            <div class="table" >
         
                                 <div class="row header">
                                     <div class="cell">
@@ -171,6 +172,7 @@
                                 {% endfor %}
                                 </div>
                                 {% endif %}
+                              </div>
                                 <br>
                                 <div class="donlot" style="text-align: center">
                                     <button class="btn btn-primary" id="download"> download pdf</button>
