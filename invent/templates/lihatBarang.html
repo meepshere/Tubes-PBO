@@ -111,14 +111,14 @@
     <!-- End sidebar-->
 
     <div class="home_content"> 
+      <h1 class="judul">DAFTAR BARANG</h1>
+          <div class="limiter">
+              <div class="container-table100">
+                  <div class="wrap-table100">
+                    <div id="printini">
         {% if pinjam|length < 1 %}
-        <h4 style="text-align: center;">Tidak ada barang pada Gedung maupun Ruang yang anda pilih</h4>
+                        <h4 style="text-align: center;"> <br>Tidak ada barang pada {{judul}} <br>  <br> </h4>
         {% else %}
-        <h1 class="judul">DAFTAR BARANG</h1>
-            <div class="limiter">
-                <div class="container-table100">
-                    <div class="wrap-table100">
-                      <div id="printini">
                         <h1 style="text-align: center">Data {{judul}}</h1>
                             <div class="table">
         
@@ -164,6 +164,7 @@
                                         <div class="cell" data-title="">
                                             <a href="/detailBarang/{{pinjam[i].barangDipinjam.id}}">detail</a>
                                         </div>
+                                      </div>
                                 {% else %}
                                     <div class="cell" data-title="ID Barang">
                                         {{ brg[i].id }}
@@ -184,11 +185,10 @@
                                         <a href="/detailBarang/{{brg[i].id}}">detail</a>
                                     </div>
                                 {% endif %}
-                                    </div>
                                 {% endfor %}
-                            </div>
-                                {% endif %}
-                                </div>
+                              </div>
+        {% endif %}
+                          </div>
                                 <div class="form">
                                     <form action="/lihatBarang" method="POST" enctype="multipart/form-data">
                                         <a>Gedung :</a>
