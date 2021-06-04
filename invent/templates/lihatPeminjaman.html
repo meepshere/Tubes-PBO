@@ -108,17 +108,17 @@
     <!-- End sidebar-->
 
     <div class="home_content"> 
-        {% if dafPinjam |length < 1 %}
-        <h4 style="text-align: center;">Tidak Ada Peminjaman</h4>
-        {% else %}
         <h1 class="judul">DAFTAR BARANG</h1>
             <div class="limiter">
                 <div class="container-table100">
                     <div class="wrap-table100">
                       <div id="printini">
+        {% if dafPinjam |length < 1 %}
+                        <h4>Tidak Ada Peminjaman</h4>
+        {% else %}
                         <h1 style="text-align: center">Data {{judul}}</h1>
                             <div class="table">
-        
+                              
                                 <div class="row header">
                                     <div class="cell">
                                         Perihal Peminjaman
