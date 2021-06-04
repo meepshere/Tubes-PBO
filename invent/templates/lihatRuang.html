@@ -110,13 +110,13 @@
     <!-- End sidebar-->
 
     <div class="home_content"> 
-        <h1 class="judul">DATA RUANGAN</h1>
+        <h1 class="judul"> &nbsp;&nbsp; DATA RUANGAN</h1>
             <div class="limiter">
                 <div class="container-table100">
                     <div class="wrap-table100">
                       <div id="printini">
         {% if ruangnya|length < 1 %}
-                      <h4>Ruangan yang dicari tidak ada</h4>
+                      <h4>Tidak ada ruangan pada {{judul}}</h4>
         {% else %}
                         <h1 style="text-align: center">Data {{judul}}</h1>
                             <div class="table">

@@ -108,7 +108,10 @@
     <!-- End sidebar-->
 
     <div class="home_content"> 
-        <h1 class="judul">DAFTAR BARANG</h1>
+        {% if dafPinjam |length < 1 %}
+        <h4 style="text-align: center;">Tidak Ada Peminjaman</h4>
+        {% else %}
+        <h1 class="judul">&nbsp;&nbsp; RIWAYAT PEMINJAMAN</h1>
             <div class="limiter">
                 <div class="container-table100">
                     <div class="wrap-table100">
@@ -166,9 +169,9 @@
                                         </div>
 
                                         <div class="cell" data-title="" style="text-align: center;">
-                                            <a href="/detailPeminjaman/{{dafPinjam[i].id}}">detail</a>
+                                            <a href="/detailPeminjaman/{{dafPinjam[i].id}}">detail </a>
                                             <br>
-                                            <a href="/viewBast/{{dafPinjam[i].id}}" target="_blank">download file</a>
+                                            <a href="/viewBast/{{dafPinjam[i].id}}" target="_blank">viewfile&nbsp;</a>
                                         </div>
                                 
                                     </div>
@@ -176,6 +179,7 @@
                                 </div>
                                 {% endif %}
                       </div>
+                      {% endif %}
                                 <div class="form">
                                     <form action="/lihatPeminjaman" method="POST" enctype="multipart/form-data">
                                         <a>Gedung :</a>
